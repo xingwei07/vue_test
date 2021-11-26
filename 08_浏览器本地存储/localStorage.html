@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>localStorage</title>
+  </head>
+  <body>
+    <h1>localStorage</h1>
+    <button onclick="add()">增加localStorage</button>
+    <button onclick="read()">读取localStorage</button>
+    <button onclick="del()">删除localStorage</button>
+    <button onclick="delAll()">清空localStorage</button>
+
+    <script>
+      const p = {
+        id: '001',
+        name: '张三',
+        age: 18
+      }
+      
+      function add(){
+        localStorage.setItem('msg','abc');
+        localStorage.setItem('num',123);
+        localStorage.setItem('obj',JSON.stringify(p));
+      }
+
+      function read(){
+        console.log(localStorage.getItem('msg'));
+        console.log(localStorage.getItem('num'));
+        const p = localStorage.getItem('obj');
+        console.log(JSON.parse(p));
+
+        console.log(localStorage.getItem('msg2'))
+      }
+
+      function del(){
+        localStorage.removeItem('msg');
+      }
+      
+      function delAll(){
+        localStorage.clear()
+      }
+    </script>
+  </body>
+</html>
