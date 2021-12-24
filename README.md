@@ -26,6 +26,18 @@
    (2).vue.runtime.xxx.js 是运行版的 Vue，只包含：核心功能；没有模板解析器
 - 因为 vue.runtime.xxx.js 没有模板解析器，所以不能使用 template 配置项，需要使用 render 函数接收到的 createElement 函数去指定具体内容。
 
+```js
+new Vue({
+  el: "#app",
+  render: (h) => h("App"),
+  /* render(createElement) {
+    return createElement("h1", "你好");
+  }, */
+
+  // template: `<h1>你好</h1>`
+});
+```
+
 ## vue.config.js 配置文件
 
 > 使用 vue inspect > out.js 可以查看到 Vue 脚手架的默认配置。  
