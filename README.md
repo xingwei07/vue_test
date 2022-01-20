@@ -491,7 +491,7 @@ module.exports = {
    import Vue from "vue";
    //引入Vuex
    import Vuex from "vuex";
-   //引用Vuex
+   //使用Vuex
    Vue.use(Vuex);
 
    const actions = {
@@ -589,7 +589,7 @@ module.exports = {
    }
    ```
 
-4. <b>mapMutaations 方法：</b>用于帮助我们生成与`mutations`对话的方法，即：包含`$store.commit(xxx)`的函数
+4. <b>mapMutations 方法：</b>用于帮助我们生成与`mutations`对话的方法，即：包含`$store.commit(xxx)`的函数
 
    ```js
    //靠mapMutations生成：increment、decrement（对象方式）
@@ -687,8 +687,12 @@ module.exports = {
 3. 编写 router 配置项：
 
    ```js
+   import Vue from 'vue'
    //引用VueRouter
    import VueRouter from "vue-router";
+
+   Vue.use(VueRouter);
+
    //引入Luyou组件
    import About from "../components/About";
    import Home from "../components/Home";
@@ -704,6 +708,14 @@ module.exports = {
          path: "/home",
          component: Home,
        },
+       {
+   	  path: '/search',
+         component: () => '../components/Search'
+         // 路由元信息
+         meta: {
+           title: '查询'
+         }
+       }
      ],
    });
 
@@ -788,6 +800,8 @@ module.exports = {
        }"
      >跳转</router-link
    >
+
+   this.$router.push(`/search?keyWords=${this.keyWords}`)
    ```
 
 2. 接收参数：
@@ -814,7 +828,6 @@ module.exports = {
               path:'test',
               component:Test,
               children:[
-
                   {
                       name:'hello',
                       path:'welcome',
@@ -861,7 +874,7 @@ module.exports = {
                component:News
            },
            {
-               path:'message',
+               path:'message/:id?', // ?：这个参数可传可不传
                component:Message,
                children:[
                    {
@@ -942,30 +955,56 @@ module.exports = {
 
 2. 具体编码：
 
-```js
-//$router的两个API
-this.$router.push({
-  name: "xiangqing",
-  params: {
-    id: xxx,
-    title: xxx,
-  },
-});
+   ```js
+   this.$router.push({
+     name: "Search",
+     query: {
+       keyWords: this.keyWords,
+     },
+   });
 
-this.$router.replace({
-  name: "xiangqing",
-  params: {
-    id: xxx,
-    title: xxx,
-  },
-});
+   //$router的两个API
+   this.$router.push({
+     name: "xiangqing",
+     params: {
+       id: xxx,
+       title: xxx,
+     },
+   });
 
-this.$router.back(); //后退
+   this.$router.replace({
+     name: "xiangqing",
+     params: {
+       id: xxx,
+       title: xxx,
+     },
+   });
 
-this.$router.forward(); //前进
+   this.$router.back(); //后退
 
-this.$router.go(); //可前进也可后退
-```
+   this.$router.forward(); //前进
+
+   this.$router.go(); //可前进也可后退
+   ```
+
+3. 传递参数：
+
+   ```js
+   // 第一种：字符串形式
+   // this.$router.push('/search/' + this.keyWords + '?keyWords=' + this.keyWords)
+   // 第二种：模板字符串
+   // this.$router.push(`/search/${this.keyWords}?keyWords=${this.keyWords}`)
+   // 第三种：对象写法
+   this.$router.push({
+     name: "Search",
+     params: {
+       keyWords: this.keyWords,
+     },
+     query: {
+       keyWords: this.keyWords,
+     },
+   });
+   ```
 
 ### 10.缓存路由组件
 
@@ -997,32 +1036,34 @@ this.$router.go(); //可前进也可后退
 
 3. 全局守卫
 
-   ```
-    //全局前置守卫：初始化时执行、每次路由切换前执行
-    router.beforeEach((to,from,next)=>{
-        console.log('beforeEach',to,from)
-        if(to.meta.isAuth){ //判断当前路由是否需要进行权限控制
-            if(localStorage.getItem('school') === 'atguigu') { //权限控制的具体规则
-                next() //放行
-            } else {
-                alert('暂无权限查看')
-                // next({name: 'guanyu'})
-            }
-            next() //放行
-        } else {
-            next() //放行
-        }
-    })
+   ```js
+   //全局前置守卫：初始化时执行、每次路由切换前执行
+   router.beforeEach((to, from, next) => {
+     console.log("beforeEach", to, from);
+     if (to.meta.isAuth) {
+       //判断当前路由是否需要进行权限控制
+       if (localStorage.getItem("school") === "atguigu") {
+         //权限控制的具体规则
+         next(); //放行
+       } else {
+         alert("暂无权限查看");
+         // next({name: 'guanyu'})
+       }
+       next(); //放行
+     } else {
+       next(); //放行
+     }
+   });
 
-    //全局后置路由守卫：初始化时执行、每次切换后执行
-    router.afterEach((to,from)=>{
-        console.log('acterEach',to,from)
-        if(to.meta.title){
-            focument.title = to.meta.title
-        } else {
-            document.title = 'vue_test'
-        }
-    })
+   //全局后置路由守卫：初始化时执行、每次切换后执行
+   router.afterEach((to, from) => {
+     console.log("acterEach", to, from);
+     if (to.meta.title) {
+       focument.title = to.meta.title;
+     } else {
+       document.title = "vue_test";
+     }
+   });
    ```
 
 4. 独享守卫
