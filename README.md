@@ -243,7 +243,7 @@ new Vue({
 
 1. 语法：`this.$nextTick(回调函数)`
 
-2. 作用：在下一次 DOM 更新结束后执行其指定的回调。
+2. 作用：在`下一次` DOM `更新循环结束`后执行其指定的回调。
 
 3. 什么时候用：当改变数据后，要基于更新后的新 DOM 进行某些操作时，要在`nextTick`所指定的回调函数中执行。
 
@@ -350,7 +350,7 @@ module.exports = {
    <Category>
                <div>html结构1</div>
            </Category>
-
+   
    子组件中：
    <template>
      <div>
@@ -373,7 +373,7 @@ module.exports = {
                    <div>html结构2</div>
                </template>
            </Category>
-
+   
    子组件中：
    <template>
      <div>
@@ -400,21 +400,21 @@ module.exports = {
                    </ul>
    			</template>
            </Category>
-
+   
    <Category>
                <template scope="scopeData">
                    <!-- 生成的是h4标题 ->
                    <h4 v-for="g in scopeData.game" :key="g>{{g}}</h4>
    			</template>
            </Category>
-
+   
    子组件中：
    <template>
      <div>
        <slot :games="games"></slot>
      </div>
    </template>
-
+   
    <script>
    export default {
      name: "Category",
@@ -473,7 +473,7 @@ module.exports = {
     //引入store
     import store from './store'
     ......
-
+   
     //创建vm
     new Vue({
         el: '#app',
@@ -594,7 +594,7 @@ module.exports = {
    ```js
    //靠mapMutations生成：increment、decrement（对象方式）
    ...mapMutations({increment:'JIA',decrement:'JIAN'}),
-
+   
    //靠mapMutations生成：increment、decrement（数组方式）
    ...mapMutations(['JIA','JIAN']),
    ```
@@ -844,10 +844,10 @@ module.exports = {
    ```html
    <!-- 简化前，需要写完整的路径 -->
    <router-link to="/demo/test/welcome">跳转</route-link>
-
+   
    <!-- 简化后，直接通过名字跳转 -->
    <router-link :to="{name:'hello'}">跳转</router-link>
-
+   
    <!-- 简化写法配合传递参数 -->
    <router-link
        :to="{
@@ -893,7 +893,7 @@ module.exports = {
    ```html
    <!-- 跳转并携带params参数，to的字符串写法 -->
    <router-link :to="/home/message/detail/666/你好">跳转</router-link>
-
+   
    <!-- 跳转并携带params参数，to的对象写法 -->
    <router-link
      :to="{

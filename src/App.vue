@@ -1,68 +1,38 @@
 <template>
   <div>
-    <button>原始样式</button>
-    <input type="text" name="" id="" placeholder="原始样式">
-    <atguigu-row>
-      <el-button>默认按钮</el-button>
-      <el-button type="primary">主要按钮</el-button>
-      <el-button type="success">成功按钮</el-button>
-      <el-button type="info">信息按钮</el-button>
-      <el-button type="warning">警告按钮</el-button>
-      <el-button type="danger">危险按钮</el-button>
-    </atguigu-row>
-
-    <el-date-picker
-      v-model="value2"
-      align="right"
-      type="date"
-      placeholder="选择日期"
-      :picker-options="pickerOptions">
-    </el-date-picker>
-
-    <atguigu-row>
-      <el-button icon="el-icon-search" circle></el-button>
-      <el-button type="primary" icon="el-icon-edit" circle></el-button>
-      <el-button type="success" icon="el-icon-check" circle></el-button>
-      <el-button type="info" icon="el-icon-message" circle></el-button>
-      <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-      <el-button type="danger" icon="el-icon-delete" circle></el-button>
-    </atguigu-row>
-  </div>
+      <div class="row">
+        <Banner />
+      </div>
+      <div class="row">
+        <div class="col-xs-2 col-xs-offset-2">
+          <div class="list-group">
+            <!-- 原始html中使用a标签实现页面的跳转 -->
+            <!-- <a href="./about.html" class="list-group-item active">About</a> -->
+            <!-- <a href="./home.html" class="list-group-item">Home</a> -->
+            
+            <!-- Vue中借助router-link标签实现路由的切换  -->
+            <router-link to="/about" class="list-group-item" active-class="active">About</router-link>
+            <router-link to="/home" class="list-group-item" active-class="active">Home</router-link>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="panel">
+            <div class="panel-body">
+              <!-- 指定组件的呈现位置 -->
+              <router-view></router-view>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
+  import Banner from './components/Banner'
   export default {
     name:'App',
-    data() {
-      return {
-        pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
-        value1: '',
-        value2: '',
-      };
+    components:{
+      Banner
     }
-  } 
+  }
 </script>

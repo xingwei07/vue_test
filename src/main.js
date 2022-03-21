@@ -1,30 +1,26 @@
 //引入Vue
 import Vue from 'vue'
-
 //引入app
 import App from './App'
-
-//完整引入
-//引入ElementUI组件库
-// import ElementUI from 'element-ui';
-//引人ElementUI全部样式
-// import 'element-ui/lib/theme-chalk/index.css';
-
-//按需引入
-import { Row,Button,DatePicker } from 'element-ui'
-
-Vue.component('atguigu-row', Row )
-Vue.component(Button.name, Button )
-Vue.component(DatePicker.name, DatePicker )
+//引入vue-router
+import VueRouter from 'vue-router'
+//引入路由器
+import router from './router'
 
 //关闭vue的生产提示
 Vue.config.productionTip = false
 
-//应用ElementUI
-// Vue.use(ElementUI);
+//使用路由器
+Vue.use(VueRouter)
 
 //创建vm
 new Vue({
     el:'#app',
     render: h => h(App),
+    router
+    // mounted(){
+    //     setTimeout(()=>{
+    //         this.$destroy()
+    //     },3000)
+    // }
 })
